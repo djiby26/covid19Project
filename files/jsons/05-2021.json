@@ -1,0 +1,176 @@
+[
+    {
+        "date": "18/05/2021",
+        "casPositifs": 24,
+        "casImportes": 0,
+        "casContacts": 9,
+        "testRealises": 869,
+        "sousTraitement": 153,
+        "casCommunautaires": 0,
+        "casGueris": 17,
+        "deces": 0,
+        "localites": [
+            {
+                "Dakar": 2027,
+                "Thies": 0,
+                "Diourbel": 0,
+                "Fatick": 0,
+                "Kaolack": 1,
+                "Kaffrine": 0,
+                "Touba": 0,
+                "Kolda": 0,
+                "Tamba": 17,
+                "Ziguinchor": 2,
+                "Saint-Louis": 0,
+                "Matam": 5,
+                "Sedhiou": 0,
+                "Kedougou": 1
+            }
+        ]
+    },
+    {
+        "date": "17/05/2021",
+        "casPositifs": 22,
+        "casImportes": 0,
+        "casContacts": 7,
+        "testRealises": 1104,
+        "sousTraitement": 147,
+        "casCommunautaires": 0,
+        "casGueris": 24,
+        "deces": 0,
+        "localites": [
+            {
+                "Dakar": 13,
+                "Thies": 0,
+                "Diourbel": 0,
+                "Fatick": 0,
+                "Kaolack": 4,
+                "Kaffrine": 0,
+                "Touba": 0,
+                "Kolda": 0,
+                "Tamba": 0,
+                "Ziguinchor": 0,
+                "Saint-Louis": 0,
+                "Matam": 0,
+                "Sedhiou": 0,
+                "Kedougou": 0
+            }
+        ]
+    },
+    {
+        "date": "11/05/2021",
+        "casPositifs": 15,
+        "casImportes": 0,
+        "casContacts": 5,
+        "testRealises": 842,
+        "sousTraitement": 180,
+        "casCommunautaires": 0,
+        "casGueris": 18,
+        "deces": 0,
+        "localites": [
+            {
+                "Dakar": 14,
+                "Thies": 0,
+                "Diourbel": 0,
+                "Fatick": 0,
+                "Kaolack": 0,
+                "Kaffrine": 0,
+                "Touba": 0,
+                "Kolda": 0,
+                "Tamba": 0,
+                "Ziguinchor": 18,
+                "Saint-Louis": 1,
+                "Matam": 1,
+                "Sedhiou": 0,
+                "Kedougou": 0
+            }
+        ]
+    },
+    {
+        "date": "10/05/2021",
+        "casPositifs": 22,
+        "casImportes": 0,
+        "casContacts": 12,
+        "testRealises": 839,
+        "sousTraitement": 183,
+        "casCommunautaires": 0,
+        "casGueris": 26,
+        "deces": 0,
+        "localites": [
+            {
+                "Dakar": 10,
+                "Thies": 0,
+                "Diourbel": 0,
+                "Fatick": 0,
+                "Kaolack": 0,
+                "Kaffrine": 0,
+                "Touba": 0,
+                "Kolda": 0,
+                "Tamba": 0,
+                "Ziguinchor": 0,
+                "Saint-Louis": 0,
+                "Matam": 0,
+                "Sedhiou": 0,
+                "Kedougou": 0
+            }
+        ]
+    },
+    {
+        "date": "09/05/2021",
+        "casPositifs": 27,
+        "casImportes": 0,
+        "casContacts": 7,
+        "testRealises": 1053,
+        "sousTraitement": 188,
+        "casCommunautaires": 0,
+        "casGueris": 49,
+        "deces": 0,
+        "localites": [
+            {
+                "Dakar": 9,
+                "Thies": 0,
+                "Diourbel": 0,
+                "Fatick": 0,
+                "Kaolack": 0,
+                "Kaffrine": 0,
+                "Touba": 0,
+                "Kolda": 0,
+                "Tamba": 1,
+                "Ziguinchor": 0,
+                "Saint-Louis": 0,
+                "Matam": 4,
+                "Sedhiou": 0,
+                "Kedougou": 0
+            }
+        ]
+    },
+    {
+        "date": "16/05/2021",
+        "casPositifs": 22,
+        "casImportes": 0,
+        "casContacts": 6,
+        "testRealises": 1508,
+        "sousTraitement": 0,
+        "casCommunautaires": 0,
+        "casGueris": 0,
+        "deces": 0,
+        "localites": [
+            {
+                "Dakar": 16,
+                "Thies": 0,
+                "Diourbel": 0,
+                "Fatick": 0,
+                "Kaolack": 0,
+                "Kaffrine": 0,
+                "Touba": 0,
+                "Kolda": 0,
+                "Tamba": 0,
+                "Ziguinchor": 0,
+                "Saint-Louis": 0,
+                "Matam": 0,
+                "Sedhiou": 0,
+                "Kedougou": 0
+            }
+        ]
+    }
+]

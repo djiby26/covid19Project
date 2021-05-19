@@ -1,0 +1,89 @@
+{
+    "nom": "2021-10",
+    "dates": [
+        {
+            "date": "20/10",
+            "nb_test": 213,
+            "nb_nouv_ca": 13,
+            "nb_cas_cont": 11,
+            "nb_cas_com": 2,
+            "nb_gueri": 32,
+            "nb_dece": 1,
+            "nom_fse": "2021-10",
+            "dateheure_ext": "26/07/1997 22:59:03",
+            "localite": [
+                {
+                    "nom_localite": "Dakar",
+                    "nb_cas": 12
+                },
+                {
+                    "nom_localite": "Thies",
+                    "nb_cas": 2
+                }
+            ]
+        },
+        {
+            "date": "21/10",
+            "nb_test": 213,
+            "nb_nouv_ca": 13,
+            "nb_cas_cont": 11,
+            "nb_cas_com": 2,
+            "nb_gueri": 32,
+            "nb_dece": 1,
+            "nom_fse": "2021-10",
+            "dateheure_ext": "26/07/1997 22:59:03",
+            "localite": [
+                {
+                    "nom_localite": "Dakar",
+                    "nb_cas": 12
+                },
+                {
+                    "nom_localite": "Thies",
+                    "nb_cas": 2
+                }
+            ]
+        },
+        {
+            "date": "22/10",
+            "nb_test": 213,
+            "nb_nouv_ca": 13,
+            "nb_cas_cont": 11,
+            "nb_cas_com": 2,
+            "nb_gueri": 32,
+            "nb_dece": 1,
+            "nom_fse": "2021-10",
+            "dateheure_ext": "26/07/1997 22:59:03",
+            "localite": [
+                {
+                    "nom_localite": "Dakar",
+                    "nb_cas": 12
+                },
+                {
+                    "nom_localite": "Thies",
+                    "nb_cas": 2
+                }
+            ]
+        },
+        {
+            "date": "23/10",
+            "nb_test": 213,
+            "nb_nouv_ca": 13,
+            "nb_cas_cont": 11,
+            "nb_cas_com": 2,
+            "nb_gueri": 32,
+            "nb_dece": 1,
+            "nom_fse": "2021-10",
+            "dateheure_ext": "26/07/1997 22:59:03",
+            "localite": [
+                {
+                    "nom_localite": "Dakar",
+                    "nb_cas": 12
+                },
+                {
+                    "nom_localite": "Thies",
+                    "nb_cas": 2
+                }
+            ]
+        }
+    ]
+}
