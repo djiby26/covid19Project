@@ -40,7 +40,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def populate_table(self):
         self.model.setRootPath(QDir.currentPath())  # definition de chemin d'acces des fichiers json et xml a afficher
         self.ui.treeView.setModel(self.model)  #
-        self.ui.treeView.setRootIndex(self.model.index('./files'))
+        self.ui.treeView.setRootIndex(self.model.index('./files/jsons'))
         self.ui.treeView.hideColumn(1)
         self.ui.treeView.hideColumn(3)
         self.ui.treeView.setColumnWidth(0, 300)
@@ -62,57 +62,62 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         with open(file_path) as f:
             self.json_file_content = json.load(f)
         # print(type(self.json_file_content))
-        print(self.json_file_content['nom'])
+        print(self.json_file_content[1]['localites'])
         schema = CommuniqueSchema()
 
-        list_communique = schema.load(self.json_file_content)
+        list_communique = self.json_file_content
+
         view = self.ui.treeWidget
         view.setSelectionMode(QAbstractItemView.MultiSelection)
         view.setHeaderHidden(True)
-        item = QTreeWidgetItem(view.invisibleRootItem())
-        item.setText(0, list_communique.nom)
-        item.setExpanded(True)
-        for i in range(len(list_communique.dates)):
-            child_item = QTreeWidgetItem()
-            child_item.setText(0, list_communique.dates[i]['date'])
+
+        for i in range(len(list_communique)):
+
+            child_item = QTreeWidgetItem(view.invisibleRootItem())
+            child_item.setText(0, list_communique[i]['date'])
             child_item.setCheckState(0, Qt.Unchecked)
+            child_item.setExpanded(True)
             sub_child1 = QTreeWidgetItem()
             sub_child2 = QTreeWidgetItem()
             sub_child3 = QTreeWidgetItem()
+            sub_child31 = QTreeWidgetItem()
+            sub_child32 = QTreeWidgetItem()
             sub_child4 = QTreeWidgetItem()
             sub_child5 = QTreeWidgetItem()
             sub_child6 = QTreeWidgetItem()
             sub_child7 = QTreeWidgetItem()
             sub_child8 = QTreeWidgetItem()
             sub_child9 = QTreeWidgetItem()
-            sub_child1.setText(0, "Nombre de Test: " + str(list_communique.dates[i]['nb_test']))
-            sub_child2.setText(0, "Nombre nouveaux Cas: " + str(list_communique.dates[i]['nb_nouv_ca']))
-            sub_child3.setText(0, "Nombre cas contact: " + str(list_communique.dates[i]['nb_cas_cont']))
-            sub_child4.setText(0, "Nombre cas communautaire: " + str(list_communique.dates[i]['nb_cas_com']))
-            sub_child5.setText(0, "Nombre gueri: " + str(list_communique.dates[i]['nb_gueri']))
-            sub_child6.setText(0, "Nombre deces: " + str(list_communique.dates[i]['nb_dece']))
-            sub_child7.setText(0, "Nom du fichier source: " + list_communique.dates[i]['nom_fse'])
-            sub_child8.setText(0, "Date et heure d'extraction: " + list_communique.dates[i]['dateheure_ext'])
-            sub_child9.setText(0, "Localites")
+            sub_child1.setText(0, "Nombre de Test: " + str(list_communique[i]['test_realise']))
+            sub_child2.setText(0, "Nombre de nouveaux Cas: " + str(list_communique[i]['nouveaux_cas']))
+            sub_child31.setText(0, "Nombre de cas importes: " + str(list_communique[i]['cas_importes']))
+            sub_child3.setText(0, "Nombre cas contact: " + str(list_communique[i]['cas_contacts']))
+            sub_child32.setText(0, "Nombre de personnes sous traitement: " + str(list_communique[i]['personne_sous_traitement']))
+            sub_child4.setText(0, "Nombre cas communautaire: " + str(list_communique[i]['cas_communautaires']))
+            sub_child5.setText(0, "Nombre gueris: " + str(list_communique[i]['nombre_gueris']))
+            sub_child6.setText(0, "Nombre deces: " + str(list_communique[i]['nombre_deces']))
+            sub_child7.setText(0, "Nom du fichier source: " + list_communique[i]['nom_fichier_source'])
+            sub_child8.setText(0, "Date et heure d'extraction: " + list_communique[i]['date_heure_extraction'])
+            sub_child9.setText(0, "Nombre de cas dans chaque region")
+            sub_child9.setExpanded(True)
 
-            for j in range(len(list_communique.dates[i]['localite'])):
-                nom_localite = QTreeWidgetItem()
-                nb_cas = QTreeWidgetItem()
-                nom_localite.setText(0, "Localite: " + list_communique.dates[i]['localite'][j]['nom_localite'])
-                nb_cas.setText(0, "Nombre de cas: " + str(list_communique.dates[i]['localite'][j]['nb_cas']))
-                sub_child9.addChildren([nom_localite, nb_cas])
+            for j in list_communique[i]['localites']:
+                localite = QTreeWidgetItem()
+                localite.setText(0, j+" : " + str(list_communique[i]['localites'][j]))
+                sub_child9.addChild(localite)
 
             child_item.addChild(sub_child1)
             child_item.addChild(sub_child2)
             child_item.addChild(sub_child3)
+            child_item.addChild(sub_child31)
+            child_item.addChild(sub_child32)
             child_item.addChild(sub_child4)
             child_item.addChild(sub_child5)
             child_item.addChild(sub_child6)
             child_item.addChild(sub_child7)
             child_item.addChild(sub_child8)
             child_item.addChild(sub_child9)
-            item.addChild(child_item)
-        view.addTopLevelItem(item)
+            view.addTopLevelItem(child_item)
 
     def check_box_clicked(self, selected, deselected):
 

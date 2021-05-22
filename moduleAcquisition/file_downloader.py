@@ -1,5 +1,4 @@
 import re
-import urllib.request
 import os
 import requests
 
@@ -34,7 +33,8 @@ subs2 = 'communiqué'
 pages_anchors = []
 pdf_page_links = []
 
-for i in range(int(last_page_number[1]) + 1):  # obtention des liens des page contenant les pdf
+# for i in range(int(last_page_number[1]) + 1):  # obtention des liens des page contenant les pdf
+for i in range(5):  # obtention des liens des page contenant les pdf
     soup2 = getSoup(url2 + str(i))
     pages_anchors = soup2.select('article > h2 > a')
     for j in pages_anchors:  # obtention des liens des docs pdf
@@ -57,7 +57,7 @@ agent = {
     "User-Agent": 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36'}
 for i in pdf_links:
     filename = os.path.join(path, 'doc'+inc+'.pdf')
-    r = requests.get(i, headers=agent, stream=True)
+    r = requests.get(i, headers=agent)
     print('debut telechargement')
     with open(filename, 'wb') as f:
         for chunk in r:
