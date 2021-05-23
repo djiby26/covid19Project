@@ -18,12 +18,12 @@ tabJson = []
 tab_month = []
 entries = os.listdir('../files/pdf')
 source_file = ''
-round = 1
+rounde = 1
 
 # recuperation du chemin de chaque doc pdf dans le dossier
 for pdf_path in entries:
     source_file = pdf_path
-    print(round)
+    print(rounde)
     try:
         images = convert_from_path('../files/pdf/' + pdf_path, poppler_path=r'C:\poppler-21.03.0\Library\bin')
         pil_im = images[0]  # assuming that we're interested in the first page only
@@ -327,5 +327,5 @@ for i in newlist:
 # MOVE ALL JSON FILE IN JSON FOLDER
 for f in glob.glob('*.json'):
     shutil.move(f, '../files/jsons')
-round += 1
+rounde = rounde + 1
 print('---------operationn successfull--------')
