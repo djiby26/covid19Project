@@ -4,13 +4,15 @@ import sys
 from PyQt5.QtCore import QDir, Qt
 from PyQt5.QtWidgets import QApplication, QMainWindow, QFileSystemModel, QTreeWidgetItem, QButtonGroup, \
     QAbstractItemView
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, MetaData
 from sqlalchemy.orm import sessionmaker
 from base import Ui_MainWindow
-from modeles.communiques import CommuniqueSchema
+from modeles.communiques import CommuniqueSchema, Communiques
 
-engine = create_engine('mysql://root:1234@localhost/covid')
-session = sessionmaker(bind=engine)
+# engine = create_engine('mysql://root:1234@localhost/covid')
+# Session = sessionmaker(bind=engine)
+# session = Session()
+# meta = MetaData()
 
 
 class MainWindow(QMainWindow, Ui_MainWindow):
@@ -58,16 +60,12 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     # affiche le contenu d'un fichier sur le panneau a droite
     def display_preview(self, file_path, first_index):
-
         with open(file_path) as f:
             self.json_file_content = json.load(f)
-        # print(type(self.json_file_content))
-        print(self.json_file_content[1]['localites'])
-        schema = CommuniqueSchema()
 
         list_communique = self.json_file_content
-
         view = self.ui.treeWidget
+        view.clear()
         view.setSelectionMode(QAbstractItemView.MultiSelection)
         view.setHeaderHidden(True)
 
@@ -92,7 +90,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             sub_child2.setText(0, "Nombre de nouveaux Cas: " + str(list_communique[i]['nouveaux_cas']))
             sub_child31.setText(0, "Nombre de cas importes: " + str(list_communique[i]['cas_importes']))
             sub_child3.setText(0, "Nombre cas contact: " + str(list_communique[i]['cas_contacts']))
-            sub_child32.setText(0, "Nombre de personnes sous traitement: " + str(list_communique[i]['personne_sous_traitement']))
+            sub_child32.setText(0, "Nombre de personnes sous traitement: " + str(
+                list_communique[i]['personne_sous_traitement']))
             sub_child4.setText(0, "Nombre cas communautaire: " + str(list_communique[i]['cas_communautaires']))
             sub_child5.setText(0, "Nombre gueris: " + str(list_communique[i]['nombre_gueris']))
             sub_child6.setText(0, "Nombre deces: " + str(list_communique[i]['nombre_deces']))
@@ -103,7 +102,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
             for j in list_communique[i]['localites']:
                 localite = QTreeWidgetItem()
-                localite.setText(0, j+" : " + str(list_communique[i]['localites'][j]))
+                localite.setText(0, j + " : " + str(list_communique[i]['localites'][j]))
                 sub_child9.addChild(localite)
 
             child_item.addChild(sub_child1)
@@ -123,23 +122,29 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
         for index in selected.indexes():
             self.checked_item_row.append(index.row())
-            # print(index.row())
         for index in deselected.indexes():
             self.unchecked_item_row.append(index.row())
-            # print(index.row())
 
     def validation(self):
         schema = CommuniqueSchema()
-        json_dates = ''
-        for it in self.unchecked_item_row:
-            self.checked_item_row.remove(it)
-        for it in range(len(self.checked_item_row)-1):
-            json_dates += '%s,' % self.json_file_content['dates'][it]
-        json_dates += "%s" % self.json_file_content['dates'][len(self.checked_item_row)-1]
-        json_string = "{'nom':'%s','dates':[%s]}" % (self.json_file_content['nom'], json_dates)
-        # json_dict = dict(json_string)
-        json_object = schema.loads(json_string)
-        print(json_string)
+        json_string = "["
+        if len(self.unchecked_item_row) > 0:
+            for it in self.unchecked_item_row:
+                self.checked_item_row.remove(it)
+        for i in range(len(self.checked_item_row) - 1):
+            json_string += str(self.json_file_content[i]) + ","
+        json_string += str(self.json_file_content[len(self.checked_item_row)]) + "]"
+        json_string = json_string.replace("\'", "\"")
+
+        try:
+            communique = None
+            json_object = schema.loads(json_string, many=True)
+            for i in json_object:
+                communique = Communiques(i.date, i.test_realise, i.nouveaux_cas, i.cas_contacts, i.cas_communautaires, i.cas_importes, i.personne_sous_traitement,
+                                         i.nombre_gueris, i.nombre_deces, i.nom_fichier_source, i.date_heure_extraction, i.localites)
+                communique.init_DB()
+        except Exception as e:
+            print(e)
 
     def on_trx_radio(self):
         self.ui.pushButton.setEnabled(True)
