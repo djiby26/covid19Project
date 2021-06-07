@@ -18,7 +18,6 @@ def run_convert_code():
     pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
 
     tabJson = []
-    # tab_month = []
     entries = os.listdir('../files/pdf')
     source_file = ''
     text = ''
@@ -29,8 +28,8 @@ def run_convert_code():
         source_file = pdf_path
         try:
             images = convert_from_path('../files/pdf/' + pdf_path, poppler_path=r'C:\poppler-21.03.0\Library\bin')
-            pil_im = images[0]
-            ocr_dict = pytesseract.image_to_data(pil_im, lang='eng', output_type=Output.DICT)
+            list_images = images[0]
+            ocr_dict = pytesseract.image_to_data(list_images, lang='eng', output_type=Output.DICT)
             text1 = " ".join(ocr_dict['text'])
 
             file = open('../files/pdf/' + pdf_path, 'rb')
@@ -44,41 +43,41 @@ def run_convert_code():
                 text2 = ''
             text = text1 + text2
 
-            day = re.search("(lundi|mardi|Mercredi|mércredi|jeudi|vendredi|samedi|dimanche)", text, re.IGNORECASE)
+            jour = re.search("(lundi|mardi|Mercredi|mércredi|jeudi|vendredi|samedi|dimanche)", text, re.IGNORECASE)
 
-            word = r"\W*([\w]+)"
+            pat = r"\W*([\w]+)"
             n = 3
-            groups = re.search(r'{}\W*{}{}'.format(word * n, str(day.group(0)), word * n), text, re.IGNORECASE).groups()
+            groups = re.search(r'{}\W*{}{}'.format(pat * n, str(jour.group(0)), pat * n), text, re.IGNORECASE).groups()
             date_input = str(groups[n:][0]) + '-' + str(groups[n:][1]).lower() + '-' + str(groups[n:][2])
             if len(str(groups[n:][0])) < 2:
-                daily = '0' + str(groups[n:][0])
+                journ = '0' + str(groups[n:][0])
             else:
-                daily = str(groups[n:][0])
+                journ = str(groups[n:][0])
             if str(groups[n:][1]).lower() == 'janvier':
-                month = '01'
+                mois = '01'
             if str(groups[n:][1]).lower() == 'février':
-                month = '02'
+                mois = '02'
             if str(groups[n:][1]).lower() == 'mars':
-                month = '03'
+                mois = '03'
             if str(groups[n:][1]).lower() == 'avril':
-                month = '04'
+                mois = '04'
             if str(groups[n:][1]).lower() == 'mai':
-                month = '05'
+                mois = '05'
             if str(groups[n:][1]).lower() == 'juin':
-                month = '06'
+                mois = '06'
             if str(groups[n:][1]).lower() == 'juillet':
-                month = '07'
+                mois = '07'
             if str(groups[n:][1]).lower() == 'août':
-                month = '08'
+                mois = '08'
             if str(groups[n:][1]).lower() == 'septembre':
-                month = '09'
+                mois = '09'
             if str(groups[n:][1]).lower() == 'octobre':
-                month = '10'
+                mois = '10'
             if str(groups[n:][1]).lower() == 'novembre':
-                month = '11'
+                mois = '11'
             if str(groups[n:][1]).lower() == 'décembre':
-                month = '12'
-            date = daily + '/' + month + '/' + str(groups[n:][2])
+                mois = '12'
+            date = journ + '/' + mois + '/' + str(groups[n:][2])
 
         except Exception as e:
             print('petit probleme')
@@ -179,11 +178,11 @@ def run_convert_code():
         expression12 = r"(?i)(?:\bSédhiou\D{0,20})([0-9][0-9,]*)[^.,]|([0-9][0-9,]*)[^.,](?:\D{0,20}Sédhiou)"
         expression13 = r"(?i)(?:\bKédougou\D{0,20})([0-9][0-9,]*)[^.,]|([0-9][0-9,]*)[^.,](?:\D{0,20}Kédougou)"
 
-        nbCasDkr = re.findall(expression, text)
-        if not nbCasDkr:
+        nb_cas_dkr = re.findall(expression, text)
+        if not nb_cas_dkr:
             nb_cas_dakar = [0]
         else:
-            dkr_str = str(nbCasDkr)
+            dkr_str = str(nb_cas_dkr)
             nb_cas_dakar = re.findall(r'\d+', dkr_str)
 
         nbCasTh = re.findall(expression1, text)
@@ -197,8 +196,8 @@ def run_convert_code():
         if not nbCasLg:
             nb_cas_louga = [0]
         else:
-            tb_str = str(nbCasLg)
-            nb_cas_louga = re.findall(r'\d+', tb_str)
+            lg_str = str(nbCasLg)
+            nb_cas_louga = re.findall(r'\d+', lg_str)
 
         nbCasDbl = re.findall(expression3, text)
         if not nbCasDbl:
@@ -309,10 +308,10 @@ def run_convert_code():
             }}
         tabJson.append(json_data[pdf_path])
 
-    values = set(map(lambda x: x['date'][3:12], tabJson))
-    newlist = [[y for y in tabJson if y['date'][3:12] == x] for x in values]
+    valeurs = set(map(lambda x: x['date'][3:12], tabJson))
+    new_list = [[y for y in tabJson if y['date'][3:12] == x] for x in valeurs]
 
-    for i in newlist:
+    for i in new_list:
         doc_name = i[0]['date'][3:12]
         txtFile = doc_name.replace('/', '-')
         annee_mois = doc_name
