@@ -17,7 +17,7 @@ import re
 def run_convert_code():
     pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
 
-    tabJson = []
+    textJson = []
     entries = os.listdir('../files/pdf')
     source_file = ''
     text = ''
@@ -163,113 +163,113 @@ def run_convert_code():
             cas_deces_nums = [0]
 
         # different regions du senegal
-        expression = r"(?i)(?:\bDakar\D{0,20})([0-9][0-9,]*)[^.,]|([0-9][0-9,]*)[^.,](?:\D{0,20}Dakar)"
-        expression1 = r"(?i)(?:\bThiès\D{0,20})([0-9][0-9,]*)[^.,]|([0-9][0-9,]*)[^.,](?:\D{0,20}Thiès)"
-        expression2 = r"(?i)(?:\bLouga\D{0,20})([0-9][0-9,]*)[^.,]|([0-9][0-9,]*)[^.,](?:\D{0,20}Louga)"
-        expression3 = r"(?i)(?:\bDiourbel\D{0,20})([0-9][0-9,]*)[^.,]|([0-9][0-9,]*)[^.,](?:\D{0,20}Diourbel)"
-        expression4 = r"(?i)(?:\bFatick\D{0,20})([0-9][0-9,]*)[^.,]|([0-9][0-9,]*)[^.,](?:\D{0,20}Fatick)"
-        expression5 = r"(?i)(?:\bKaolack\D{0,20})([0-9][0-9,]*)[^.,]|([0-9][0-9,]*)[^.,](?:\D{0,20}Kaolack)"
-        expression6 = r"(?i)(?:\bKaffrine\D{0,20})([0-9][0-9,]*)[^.,]|([0-9][0-9,]*)[^.,](?:\D{0,20}Kaffrine)"
-        expression7 = r"(?i)(?:\bKolda\D{0,20})([0-9][0-9,]*)[^.,]|([0-9][0-9,]*)[^.,](?:\D{0,20}Kolda)"
-        expression8 = r"(?i)(?:\bTamba\D{0,20})([0-9][0-9,]*)[^.,]|([0-9][0-9,]*)[^.,](?:\D{0,20}Tamba)"
-        expression9 = r"(?i)(?:\bZiguinchor\D{0,20})([0-9][0-9,]*)[^.,]|([0-9][0-9,]*)[^.,](?:\D{0,20}Ziguinchor)"
-        expression10 = r"(?i)(?:\bSaint-Louis\D{0,20})([0-9][0-9,]*)[^.,]|([0-9][0-9,]*)[^.,](?:\D{0,20}Saint-Louis)"
-        expression11 = r"(?i)(?:\bMatam\D{0,20})([0-9][0-9,]*)[^.,]|([0-9][0-9,]*)[^.,](?:\D{0,20}Matam)"
-        expression12 = r"(?i)(?:\bSédhiou\D{0,20})([0-9][0-9,]*)[^.,]|([0-9][0-9,]*)[^.,](?:\D{0,20}Sédhiou)"
-        expression13 = r"(?i)(?:\bKédougou\D{0,20})([0-9][0-9,]*)[^.,]|([0-9][0-9,]*)[^.,](?:\D{0,20}Kédougou)"
+        reg1 = r"(?i)(?:\bDakar\D{0,20})([0-9][0-9,]*)[^.,]|([0-9][0-9,]*)[^.,](?:\D{0,20}Dakar)"
+        reg2 = r"(?i)(?:\bThiès\D{0,20})([0-9][0-9,]*)[^.,]|([0-9][0-9,]*)[^.,](?:\D{0,20}Thiès)"
+        reg3 = r"(?i)(?:\bLouga\D{0,20})([0-9][0-9,]*)[^.,]|([0-9][0-9,]*)[^.,](?:\D{0,20}Louga)"
+        reg4 = r"(?i)(?:\bDiourbel\D{0,20})([0-9][0-9,]*)[^.,]|([0-9][0-9,]*)[^.,](?:\D{0,20}Diourbel)"
+        reg5 = r"(?i)(?:\bFatick\D{0,20})([0-9][0-9,]*)[^.,]|([0-9][0-9,]*)[^.,](?:\D{0,20}Fatick)"
+        reg6 = r"(?i)(?:\bKaolack\D{0,20})([0-9][0-9,]*)[^.,]|([0-9][0-9,]*)[^.,](?:\D{0,20}Kaolack)"
+        reg7 = r"(?i)(?:\bKaffrine\D{0,20})([0-9][0-9,]*)[^.,]|([0-9][0-9,]*)[^.,](?:\D{0,20}Kaffrine)"
+        reg8 = r"(?i)(?:\bKolda\D{0,20})([0-9][0-9,]*)[^.,]|([0-9][0-9,]*)[^.,](?:\D{0,20}Kolda)"
+        reg9 = r"(?i)(?:\bTamba\D{0,20})([0-9][0-9,]*)[^.,]|([0-9][0-9,]*)[^.,](?:\D{0,20}Tamba)"
+        reg10 = r"(?i)(?:\bZiguinchor\D{0,20})([0-9][0-9,]*)[^.,]|([0-9][0-9,]*)[^.,](?:\D{0,20}Ziguinchor)"
+        reg11 = r"(?i)(?:\bSaint-Louis\D{0,20})([0-9][0-9,]*)[^.,]|([0-9][0-9,]*)[^.,](?:\D{0,20}Saint-Louis)"
+        reg12 = r"(?i)(?:\bMatam\D{0,20})([0-9][0-9,]*)[^.,]|([0-9][0-9,]*)[^.,](?:\D{0,20}Matam)"
+        reg13 = r"(?i)(?:\bSédhiou\D{0,20})([0-9][0-9,]*)[^.,]|([0-9][0-9,]*)[^.,](?:\D{0,20}Sédhiou)"
+        reg14 = r"(?i)(?:\bKédougou\D{0,20})([0-9][0-9,]*)[^.,]|([0-9][0-9,]*)[^.,](?:\D{0,20}Kédougou)"
 
-        nb_cas_dkr = re.findall(expression, text)
+        nb_cas_dkr = re.findall(reg1, text)
         if not nb_cas_dkr:
             nb_cas_dakar = [0]
         else:
             dkr_str = str(nb_cas_dkr)
             nb_cas_dakar = re.findall(r'\d+', dkr_str)
 
-        nbCasTh = re.findall(expression1, text)
+        nbCasTh = re.findall(reg2, text)
         if not nbCasTh:
             nb_cas_thies = [0]
         else:
             th_str = str(nbCasTh)
             nb_cas_thies == re.findall(r'\d+', th_str)
 
-        nbCasLg = re.findall(expression2, text)
+        nbCasLg = re.findall(reg3, text)
         if not nbCasLg:
             nb_cas_louga = [0]
         else:
             lg_str = str(nbCasLg)
             nb_cas_louga = re.findall(r'\d+', lg_str)
 
-        nbCasDbl = re.findall(expression3, text)
+        nbCasDbl = re.findall(reg4, text)
         if not nbCasDbl:
             nb_cas_diourbel = [0]
         else:
             dbl_str = str(nbCasDbl)
             nb_cas_diourbel = re.findall(r'\d+', dbl_str)
 
-        nbCasFtk = re.findall(expression4, text)
+        nbCasFtk = re.findall(reg5, text)
         if not nbCasFtk:
             nb_cas_fatick = [0]
         else:
             ftk_str = str(nbCasFtk)
             nb_cas_fatick = re.findall(r'\d+', ftk_str)
 
-        nbCasKlk = re.findall(expression5, text)
+        nbCasKlk = re.findall(reg6, text)
         if not nbCasKlk:
             nb_cas_kaolack = [0]
         else:
             klk_str = str(nbCasKlk)
             nb_cas_kaolack = re.findall(r'\d+', klk_str)
 
-        nbCasKfr = re.findall(expression6, text)
+        nbCasKfr = re.findall(reg7, text)
         if not nbCasKfr:
             nb_cas_kaffrine = [0]
         else:
             kfr_str = str(nbCasKfr)
             nb_cas_kaffrine = re.findall(r'\d+', kfr_str)
 
-        nbCasKld = re.findall(expression7, text)
+        nbCasKld = re.findall(reg8, text)
         if not nbCasKld:
             nb_cas_kolda = [0]
         else:
             kld_str = str(nbCasKld)
             nb_cas_kolda = re.findall(r'\d+', kld_str)
 
-        nbCasTmb = re.findall(expression8, text)
+        nbCasTmb = re.findall(reg9, text)
         if not nbCasTmb:
             nb_cas_tamba = [0]
         else:
             tmb_str = str(nbCasTmb)
             nb_cas_tamba = re.findall(r'\d+', tmb_str)
 
-        nbCasZig = re.findall(expression9, text)
+        nbCasZig = re.findall(reg10, text)
         if not nbCasZig:
             nb_cas_ziguinchor = [0]
         else:
             zig_str = str(nbCasZig)
             nb_cas_ziguinchor = re.findall(r'\d+', zig_str)
 
-        nbCasSl = re.findall(expression10, text)
+        nbCasSl = re.findall(reg11, text)
         if not nbCasSl:
             nb_cas_saintl = [0]
         else:
             sl_str = str(nbCasSl)
             nb_cas_saintl = re.findall(r'\d+', sl_str)
 
-        nbCasMtm = re.findall(expression11, text)
+        nbCasMtm = re.findall(reg12, text)
         if not nbCasMtm:
             nb_cas_matam = [0]
         else:
             mtm_str = str(nbCasMtm)
             nb_cas_matam = re.findall(r'\d+', mtm_str)
 
-        nbCasSdh = re.findall(expression12, text)
+        nbCasSdh = re.findall(reg13, text)
         if not nbCasSdh:
             nb_cas_sedhiou = [0]
         else:
             sdh_str = str(nbCasSdh)
             nb_cas_sedhiou = re.findall(r'\d+', sdh_str)
 
-        nbCasKdg = re.findall(expression13, text)
+        nbCasKdg = re.findall(reg14, text)
         if not nbCasKdg:
             nb_cas_kedougou = [0]
         else:
@@ -306,10 +306,10 @@ def run_convert_code():
                     'Kedougou': int(nb_cas_kedougou[0])
                 }
             }}
-        tabJson.append(json_data[pdf_path])
+        textJson.append(json_data[pdf_path])
 
-    valeurs = set(map(lambda x: x['date'][3:12], tabJson))
-    new_list = [[y for y in tabJson if y['date'][3:12] == x] for x in valeurs]
+    valeurs = set(map(lambda x: x['date'][3:12], textJson))
+    new_list = [[y for y in textJson if y['date'][3:12] == x] for x in valeurs]
 
     for i in new_list:
         doc_name = i[0]['date'][3:12]
