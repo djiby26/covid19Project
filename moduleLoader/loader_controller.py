@@ -1,18 +1,15 @@
 import json
+import os
 import sys
 
 from PyQt5.QtCore import QDir, Qt
 from PyQt5.QtWidgets import QApplication, QMainWindow, QFileSystemModel, QTreeWidgetItem, QButtonGroup, \
     QAbstractItemView
-from sqlalchemy import create_engine, MetaData
-from sqlalchemy.orm import sessionmaker
-from base import Ui_MainWindow
-from modeles.communiques import CommuniqueSchema, Communiques
 
-# engine = create_engine('mysql://root:1234@localhost/covid')
-# Session = sessionmaker(bind=engine)
-# session = Session()
-# meta = MetaData()
+from moduleAcquisition.data_acquisition import *
+from moduleAcquisition.file_downloader import *
+from ui.base import Ui_MainWindow
+from modeles.communiques import CommuniqueSchema, Communiques
 
 
 class MainWindow(QMainWindow, Ui_MainWindow):
@@ -23,9 +20,17 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.model = QFileSystemModel()
+        self.model1 = QFileSystemModel()
+        self.model2 = QFileSystemModel()
+        self.model3 = QFileSystemModel()
         self.ui = Ui_MainWindow()  # represente la fenetre principale
         self.ui.setupUi(self)
+
+        # Module Acquisition
+        self.ui.pushButton_5.clicked.connect(self.convert_json)
+        self.ui.pushButton_4.clicked.connect(self.download_commnunique)
+
+        # Module Loader
         self.ui.treeView.doubleClicked.connect(self.on_double_click)  # signal sur une ligne du tableau affichant
         # l'ensemble des fichiers json
         self.ui.treeView.setAlternatingRowColors(True)
@@ -39,17 +44,38 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         selmodel.selectionChanged.connect(self.check_box_clicked)
         self.ui.pushButton_3.clicked.connect(self.validation)
 
-    def populate_table(self):
-        self.model.setRootPath(QDir.currentPath())  # definition de chemin d'acces des fichiers json et xml a afficher
-        self.ui.treeView.setModel(self.model)  #
-        self.ui.treeView.setRootIndex(self.model.index('./files/jsons'))
+    # Module Acquisition
+    def populate_doc_table(self):
+        self.model1.setRootPath(QDir.currentPath())  # definition de chemin d'acces des fichiers json a afficher
+        self.ui.treeView_2.setModel(self.model2)  #
+        self.ui.treeView_2.setRootIndex(self.model2.index('../files/pdf'))
+        self.ui.treeView_2.hideColumn(1)
+        self.ui.treeView_2.hideColumn(3)
+        self.ui.treeView.setColumnWidth(0, 300)
+
+    def populate_json_table(self):
+        self.model3.setRootPath(QDir.currentPath())  # definition de chemin d'acces des fichiers json a afficher
+        self.ui.treeView_3.setModel(self.model3)  #
+        self.ui.treeView_3.setRootIndex(self.model3.index('../files/jsons'))
+
+    def convert_json(self):
+        run_convert_code()
+
+    def download_commnunique(self):
+        run_acq_code()
+
+    # Module Loader code
+    def populate_communique_table(self):
+        self.model2.setRootPath(QDir.currentPath())  # definition de chemin d'acces des fichiers json a afficher
+        self.ui.treeView.setModel(self.model2)  #
+        self.ui.treeView.setRootIndex(self.model2.index('../files/jsons'))
         self.ui.treeView.hideColumn(1)
         self.ui.treeView.hideColumn(3)
         self.ui.treeView.setColumnWidth(0, 300)
 
     def on_double_click(self, index):
         # premet d'obtenir le chemin d'acces du fichier selectionne lors d'un double clique
-        file_path = self.model.filePath(index)
+        file_path = self.model2.filePath(index)
 
         # recuperation du nom du fichier selectionne los d'un double clique
         index_ = self.ui.treeView.selectedIndexes()  # on recupere l'ensemble des indexes
@@ -140,8 +166,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             communique = None
             json_object = schema.loads(json_string, many=True)
             for i in json_object:
-                communique = Communiques(i.date, i.test_realise, i.nouveaux_cas, i.cas_contacts, i.cas_communautaires, i.cas_importes, i.personne_sous_traitement,
-                                         i.nombre_gueris, i.nombre_deces, i.nom_fichier_source, i.date_heure_extraction, i.localites)
+                communique = Communiques(i.date, i.test_realise, i.nouveaux_cas, i.cas_contacts, i.cas_communautaires,
+                                         i.cas_importes, i.personne_sous_traitement,
+                                         i.nombre_gueris, i.nombre_deces, i.nom_fichier_source, i.date_heure_extraction,
+                                         i.localites)
                 communique.init_DB()
         except Exception as e:
             print(e)
@@ -158,6 +186,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     mW = MainWindow()
-    mW.populate_table()
+    mW.populate_communique_table()
+    mW.populate_doc_table()
+    mW.populate_json_table()
     mW.show()
     app.exec_()

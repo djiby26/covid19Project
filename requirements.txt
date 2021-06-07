@@ -19,7 +19,7 @@ pdfminer.six==20201018
 Pillow==8.2.0
 py-pdf-parser==0.8.0
 pycparser==2.20
-PyQt5~=5.15.4
+PyQt5~=5.15.2
 PyQt5-Qt5==5.15.2
 PyQt5-sip==12.9.0
 PyQt5-stubs==5.15.2.0
@@ -34,3 +34,5 @@ SQLAlchemy~=1.4.15
 urllib3==1.26.4
 Wand==0.6.6
 webencodings==0.5.1
+
+pdfminer~=20191125

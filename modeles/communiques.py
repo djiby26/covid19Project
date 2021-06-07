@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, PickleType, create_engine, MetaData, Table
+from sqlalchemy import Column, Integer, String, PickleType, create_engine, MetaData
 from marshmallow import Schema, fields, post_load
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
@@ -10,21 +10,8 @@ session = Session()
 meta = MetaData(engine)
 
 
-# class Localite(Base):
-#     __tablename__ = "localite"
-#
-#     id = Column(Integer, primary_key=True, autoincrement=True)
-#     nom_localite = Column(String(30), nullable=False)
-#     nb_cas = Column(Integer, nullable=False)
-#
-#     def __init__(self, nom_localite, nb_cas):
-#         self.nom_localite = nom_localite
-#         self.nb_cas = nb_cas
-
-
 class Communiques(Base):
     __tablename__ = 'communique'
-    # __table_args = {'mysql_engine': 'InnoBB'}
 
     id = Column(Integer, primary_key=True, autoincrement=True)
     date = Column(String(30))
@@ -62,15 +49,6 @@ class Communiques(Base):
         session.commit()
 
         print("Initialized the db")
-
-
-# students = Table(
-#     'students', meta,
-#     Column('id', Integer, primary_key=True),
-#     Column('name', String(30)),
-#     Column('lastname', String(30)),
-#     Column('dates', PickleType)
-# )
 
 
 class CommuniqueSchema(Schema):
